@@ -1,0 +1,67 @@
+[
+    {
+        "nij": "040400101",
+        "nkj": "0404001",
+        "nama": "Samuel Hilli",
+        "tempat_lahir": "Kupang",
+        "tanggal_lahir": "1972-12-21",
+        "jenis_kelamin": "Laki-Laki",
+        "pendidikan_terakhir": "SD",
+        "status_dalam_kel": "Kepala Keluarga",
+        "pekerjaan": "WIRASWASTA",
+        "kode_rayon": "0404",
+        "umur": 48
+    },
+    {
+        "nij": "040400102",
+        "nkj": "0404001",
+        "nama": "Sarlota Hilli-Le'u",
+        "tempat_lahir": "Kupang",
+        "tanggal_lahir": "1976-09-15",
+        "jenis_kelamin": "Perempuan",
+        "pendidikan_terakhir": "SD",
+        "status_dalam_kel": "Istri",
+        "pekerjaan": "IBU RUMAH TANGGA",
+        "kode_rayon": "0404",
+        "umur": 44
+    },
+    {
+        "nij": "040400103",
+        "nkj": "0404001",
+        "nama": "Briliant Excel Hilli",
+        "tempat_lahir": "Kupang",
+        "tanggal_lahir": "2007-07-07",
+        "jenis_kelamin": "Laki-Laki",
+        "pendidikan_terakhir": "SD",
+        "status_dalam_kel": "Anak",
+        "pekerjaan": "PELAJAR",
+        "kode_rayon": "0404",
+        "umur": 14
+    },
+    {
+        "nij": "040400201",
+        "nkj": "0404002",
+        "nama": "Antonius Smaut",
+        "tempat_lahir": "Oefafi",
+        "tanggal_lahir": "2021-09-13",
+        "jenis_kelamin": "Laki-Laki",
+        "pendidikan_terakhir": "SMA\/SMK",
+        "status_dalam_kel": "Kepala Keluarga",
+        "pekerjaan": "WIRASWASTA",
+        "kode_rayon": "0404",
+        "umur": 0
+    },
+    {
+        "nij": "040400203",
+        "nkj": "0404002",
+        "nama": "Gilbert Smaut",
+        "tempat_lahir": "Kupang",
+        "tanggal_lahir": "2021-09-16",
+        "jenis_kelamin": "Laki-Laki",
+        "pendidikan_terakhir": "SMA\/SMK",
+        "status_dalam_kel": "Anak",
+        "pekerjaan": "PELAJAR",
+        "kode_rayon": "0404",
+        "umur": 0
+    }
+]

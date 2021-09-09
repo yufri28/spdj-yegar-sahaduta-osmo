@@ -1,0 +1,52 @@
+[
+    {
+        "kode_rayon": "0101",
+        "nama_rayon": "Rayon I",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0202",
+        "nama_rayon": "Rayon II",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0303",
+        "nama_rayon": "Rayon III",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0404",
+        "nama_rayon": "Rayon IV",
+        "jumlah_data": 2
+    },
+    {
+        "kode_rayon": "0505",
+        "nama_rayon": "Rayon V",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0606",
+        "nama_rayon": "Rayon VI",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0707",
+        "nama_rayon": "Rayon VII",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0808",
+        "nama_rayon": "Rayon VIII",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "0909",
+        "nama_rayon": "Rayon IX",
+        "jumlah_data": 0
+    },
+    {
+        "kode_rayon": "1010",
+        "nama_rayon": "Rayon X",
+        "jumlah_data": 0
+    }
+]
