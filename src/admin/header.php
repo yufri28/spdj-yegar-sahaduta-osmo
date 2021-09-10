@@ -268,19 +268,20 @@
                             <span style="color: rgba(255, 255, 255, 0.589);">CORE</span>
                         </div>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link px-3 active">
+                    <li class="list-active-page">
+                        <a href="#" class="nav-link px-3 dashboard active">
                             <span class="me-2"><i class="bi bi-speedometer2"></i></span>
-                            <span>Dashboard</span>
+                            <span class="core-active">Dashboard</span>
                         </a>
                     </li>
                     <li class="my-4">
                         <hr class="dropdown-divider bg-light" />
                     </li>
                     <li>
-                        <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                            <span style="color: rgba(255, 255, 255, 0.589);">Jemaat</span>
-                        </div>
+                        <a href="./index.php" class="nav-link px-3">
+                            <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                            <span>Dashboard</span>
+                        </a>
                     </li>
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#layouts">
@@ -313,10 +314,34 @@
                         </a>
                         <div class="collapse" id="kategorial">
                             <ul class="navbar-nav ps-3">
-                                <li>
-                                    <a href="./kategorial/index.php" class="nav-link px-3">
+                                <li class="list-active">
+                                    <a href="./kategorial.php" class="nav-link semua-kategori px-3">
                                         <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                                         <span>Semua Kategorial</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./kategorial.php?mod=bapak" class="nav-link kaum-bapak px-3">
+                                        <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                                        <span>Kaum Bapak</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./kategorial.php?mod=ibu" class="nav-link kaum-ibu px-3">
+                                        <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                                        <span>Kaum Ibu</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./kategorial.php?mod=pemuda" class="nav-link pemuda px-3">
+                                        <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                                        <span>Pemuda</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./kategorial.php?mod=par" class="nav-link par px-3">
+                                        <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                                        <span>PAR</span>
                                     </a>
                                 </li>
                             </ul>

@@ -7,6 +7,31 @@
 <script src="../../resource/slick-master/slick/slick.min.js"></script>
 <script>
 $(document).ready(function() {
+
+    // index page
+    var indxTotJem = $('.index-total-jemaat');
+    var indxKaumBpk = $('.index-kaum-bapak');
+    var indxKaumIbu = $('.index-kaum-ibu');
+    var indxKaumPemuda = $('.index-pemuda');
+    var indxKaumPar = $('.index-par');
+
+    indxTotJem.on('click', function() {
+        window.location.href = './kategorial.php';
+    });
+    indxKaumBpk.on('click', function() {
+        window.location.href = './kategorial.php?mod=bapak';
+    });
+    indxKaumIbu.on('click', function() {
+        window.location.href = './kategorial.php?mod=ibu';
+    });
+    indxKaumPemuda.on('click', function() {
+        window.location.href = './kategorial.php?mod=pemuda';
+    });
+    indxKaumPar.on('click', function() {
+        window.location.href = './kategorial.php?mod=par';
+    });
+
+
     $('.slider').slick({
         infinite: true,
         slidesToShow: 4,
@@ -49,6 +74,21 @@ $(document).ready(function() {
     //         }
     //     ]
     // });
+
+    var activePage = $('.judul-page').text();
+    console.log('------------------------------------');
+    console.log(activePage);
+    console.log('------------------------------------');
+    var coreActive = $('.core-active');
+    var dashboard = $('.dashboard');
+    var liActivePage = $('.list-active-page');
+    var coreKate =
+        "<a href='./kategorial.php' class='nav-link active px-3'><span class='me-2'><i class='bi bi-people'></i></span><span>Kategorial</span></a>";
+
+    if (activePage == 'Kategorial') {
+        liActivePage.append(coreKate);
+        dashboard.remove();
+    }
 });
 </script>
 </body>

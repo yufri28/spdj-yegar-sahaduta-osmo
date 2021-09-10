@@ -1,7 +1,7 @@
 <?php
 
 // include '../../config/koneksi.php';
-require_once '../config-admin/_koneksi.php';
+require_once '_koneksi.php';
 
 class Jemaat extends database
 {

@@ -1,6 +1,6 @@
 <?php
 
-include '../config-admin/koneksi.php';
+include 'koneksi.php';
 
 class Daftar
 {

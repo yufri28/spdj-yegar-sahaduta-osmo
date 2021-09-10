@@ -87,11 +87,11 @@ class Jemaat extends database
                 </script>";
         } else {
             die();
-            // echo
-            //     "<script>
-            //         alert('Edit data gagal!');
-            //         window.location='../users/index.php';
-            //     </script>";
+            echo
+                "<script>
+                    alert('Edit data gagal!');
+                    window.location='../users/index.php';
+                </script>";
         }
 
         $stmt->close();

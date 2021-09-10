@@ -1,12 +1,12 @@
 <?php
- include '../config-admin/koneksi.php';
- include '../config-admin/proses-data.php';
- include '../config-admin/daftar.php';
+ include './config-admin/_koneksi.php';
+ include './config-admin/proses-data.php';
+ include './config-admin/daftar.php';
 
     global $conn;
     $queryData = mysqli_query($conn, 'SELECT * FROM tb_anggota');
      // read json file
-     $data = file_get_contents('../kategorial/anggota.json');
+     $data = file_get_contents('./kategorial/anggota.json');
 
     // decode json
      $json_arr = json_decode($data, true);
@@ -44,12 +44,12 @@
     }
     $jsonfile = json_encode($json_arr, JSON_PRETTY_PRINT);
     // encode json and save to file
-    file_put_contents('../kategorial/anggota.json', $jsonfile);
+    file_put_contents('./kategorial/anggota.json', $jsonfile);
 
     if (isset($_GET['mod'])) {
         $queryData = mysqli_query($conn, 'SELECT * FROM tb_anggota');
         // read json file
-        $data = file_get_contents('../kategorial/anggota.json');
+        $data = file_get_contents('./kategorial/anggota.json');
         // decode json
         $json_arr = json_decode($data, true);
 
@@ -79,7 +79,7 @@
                 if ($value['umur'] >= 16 && $value['status_dalam_kel'] == 'Anak') {
                     // $queryData = $json_arr;
                     // read json file
-                    $data = file_get_contents('../kategorial/Pemuda.json');
+                    $data = file_get_contents('./kategorial/Pemuda.json');
                     // decode json
                     $json_arr = json_decode($data, true);
                     unset($json_arr);
@@ -115,10 +115,10 @@
 
                     $jsonfile = json_encode($json_arr, JSON_PRETTY_PRINT);
                     // encode json and save to file
-                    file_put_contents('../kategorial/Pemuda.json', $jsonfile);
+                    file_put_contents('./kategorial/Pemuda.json', $jsonfile);
                 }
             }
-            $data = file_get_contents('../kategorial/Pemuda.json');
+            $data = file_get_contents('./kategorial/Pemuda.json');
             // decode json
             $json_arr = json_decode($data, true);
             if (!empty($json_arr)) {
@@ -134,7 +134,7 @@
                 if ($value['umur'] <= 15 && $value['status_dalam_kel'] == 'Anak') {
                     // $queryData = $json_arr;
                     // read json file
-                    $data = file_get_contents('../kategorial/PAR.json');
+                    $data = file_get_contents('./kategorial/PAR.json');
                     // decode json
                     $json_arr = json_decode($data, true);
                     unset($json_arr);
@@ -170,10 +170,10 @@
 
                     $jsonfile = json_encode($json_arr, JSON_PRETTY_PRINT);
                     // encode json and save to file
-                    file_put_contents('../kategorial/PAR.json', $jsonfile);
+                    file_put_contents('./kategorial/PAR.json', $jsonfile);
                 }
             }
-            $data = file_get_contents('../kategorial/PAR.json');
+            $data = file_get_contents('./kategorial/PAR.json');
             // decode json
             $json_arr = json_decode($data, true);
             if (!empty($json_arr)) {
@@ -189,31 +189,204 @@
         $queryData = mysqli_query($conn, 'SELECT * FROM tb_anggota');
     }
     $query_data = $queryData;
+
+    // data card dashboard
+    $queryKK = mysqli_query($conn, 'SELECT COUNT(*) AS jumlahKK FROM tb_keluarga');
+    $jumlahKK = mysqli_fetch_array($queryKK);
+    $querySemuaData = mysqli_query($conn, 'SELECT COUNT(*) AS jumlahData FROM tb_anggota');
+    $semuaData = mysqli_fetch_array($querySemuaData);
+    $queryKaumBapak = mysqli_query($conn, "SELECT COUNT(status_dalam_kel) AS jumlahBapak FROM tb_anggota WHERE status_dalam_kel = 'Kepala Keluarga' AND jenis_kelamin = 'Laki-Laki'");
+    $kaumBapak = mysqli_fetch_array($queryKaumBapak);
+    $queryKaumIbu = mysqli_query($conn, "SELECT COUNT(status_dalam_kel) AS jumlahIbu FROM tb_anggota WHERE status_dalam_kel = 'Istri' AND jenis_kelamin = 'Perempuan'");
+    $kaumIbu = mysqli_fetch_array($queryKaumIbu);
+
+    $data = file_get_contents('./kategorial/Pemuda.json');
+    $json_arr = json_decode($data, true);
+    if (empty($json_arr)) {
+        $pemuda = 0;
+    } else {
+        $pemuda = count($json_arr);
+    }
+
+    $data1 = file_get_contents('./kategorial/PAR.json');
+    $json_arr1 = json_decode($data1, true);
+    if (empty($json_arr1)) {
+        $par = 0;
+    } else {
+        $par = count($json_arr1);
+    }
+    // hapus data lama
+    unset($json_arr);
+    unset($json_arr1);
+    foreach ($query_data as $value) {
+        $tanggal = $value['tanggal_lahir'];
+        $umur = new DateTime($tanggal);
+        $sekarang = new DateTime();
+        $usia = $sekarang->diff($umur);
+        if ($usia->y >= 16 && $usia->m >= 6 && $value['status_dalam_kel'] != 'Kepala Keluarga' && $value['status_dalam_kel'] != 'Istri') {
+            $json_arr[] = [
+                'nij' => $value['nij'],
+                'nkj' => $value['nkj'],
+                'nama' => $value['nama'],
+                'tempat_lahir' => $value['tempat_lahir'],
+                'tanggal_lahir' => $value['tanggal_lahir'],
+                'jenis_kelamin' => $value['jenis_kelamin'],
+                'pendidikan_terakhir' => $value['pendidikan_terakhir'],
+                'status_dalam_kel' => $value['status_dalam_kel'],
+                'pekerjaan' => $value['pekerjaan'],
+                'kode_rayon' => $value['kode_rayon'],
+                'umur' => $usia->y,
+                ];
+
+            $jsonfile = json_encode($json_arr, JSON_PRETTY_PRINT);
+            // encode json and save to file
+            file_put_contents('./kategorial/Pemuda.json', $jsonfile);
+        } elseif ($usia->y <= 16 && $usia->m <= 5) {
+            $json_arr1[] = [
+                'nij' => $value['nij'],
+                'nkj' => $value['nkj'],
+                'nama' => $value['nama'],
+                'tempat_lahir' => $value['tempat_lahir'],
+                'tanggal_lahir' => $value['tanggal_lahir'],
+                'jenis_kelamin' => $value['jenis_kelamin'],
+                'pendidikan_terakhir' => $value['pendidikan_terakhir'],
+                'status_dalam_kel' => $value['status_dalam_kel'],
+                'pekerjaan' => $value['pekerjaan'],
+                'kode_rayon' => $value['kode_rayon'],
+                'umur' => $usia->y,
+                ];
+            $jsonfile1 = json_encode($json_arr1, JSON_PRETTY_PRINT);
+            // encode json and save to file
+            file_put_contents('./kategorial/PAR.json', $jsonfile1);
+        }
+    }
 ?>
-<?php require_once '../header.php'; ?>
+<?php
+require_once './header.php';
+?>
 <!-- offcanvas -->
 <main class="mt-5 pt-3">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4>Kategorial</h4>
+                <h4 class="judul-page">Dashboard</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 index-total-jemaat mb-3" style="cursor: pointer;">
+                <div class="card text-white h-100" style="background: #A12568;">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">Total Kepala Keluarga</h4>
+                        <h3 class="text-center"><?= $jumlahKK['jumlahKK']; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 index-total-jemaat mb-3" style="cursor: pointer;">
+                <div class="card text-white h-100" style="background: #297F87;">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">Total Jemaat</h4>
+                        <h3 class="text-center"><?= $semuaData['jumlahData']; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 index-kaum-bapak mb-3" style="cursor: pointer;">
+                <div class="card bg-warning text-dark h-100">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">Kaum Bapak</h4>
+                        <h3 class="text-center"><?= $kaumBapak['jumlahBapak']; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 index-kaum-ibu mb-3" style="cursor: pointer;">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">Kaum Ibu</h4>
+                        <h3 class="text-center"><?= $kaumIbu['jumlahIbu']; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 index-pemuda mb-3" style="cursor: pointer;">
+                <div class="card bg-danger text-white h-100">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">Pemuda</h4>
+                        <h3 class="text-center"><?= $pemuda; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 index-par mb-3" style="cursor: pointer;">
+                <div class="card bg-info text-white h-100">
+                    <div class="card-body py-5">
+                        <h4 class="text-center">PAR</h4>
+                        <h3 class="text-center"><?= $par; ?></h3>
+                    </div>
+                    <div class="card-footer d-flex">
+                        View Details
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span> Area Chart Example
+                    </div>
+                    <div class="card-body">
+                        <canvas class="chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span> Area Chart Example
+                    </div>
+                    <div class="card-body">
+                        <canvas class="chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <span><i class="bi bi-table me-2"></i></span> Anggota Jemaat
+                        <span><i class="bi bi-table me-2"></i></span> Data Table
                     </div>
                     <div class="card-body">
-                        <div class="button-report">
-                            <a href="" type="button" class="btn btn-sm btn-secondary mb-3"><i class="bi bi-printer">
-                                    Print</i></a>
-                            <a href="" type="button" class="btn btn-sm btn-success mb-3"><i
-                                    class="bi bi-file-earmark-spreadsheet"> Export to Excel</i></a>
-                            <a href="" type="button" class="btn btn-sm btn-danger mb-3"><i
-                                    class="bi bi-file-earmark-pdf"> Export to PDF</i></a>
-                        </div>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped data-table" style="width: 100%">
                                 <thead>
@@ -226,7 +399,6 @@
                                         <th>Pendidikan Terakhir</th>
                                         <th class="w-25">Status</th>
                                         <th class="w-25">Pekerjaan</th>
-                                        <th class="w-25 Aksi">Aksi</th>
                                         <th hidden>NIJ</th>
                                         <th hidden>NIJ</th>
                                     </tr>
@@ -244,36 +416,6 @@
                                         <td><?= $data['pekerjaan']; ?></td>
                                         <td hidden><?= $data['nkj']; ?></td>
                                         <td hidden><?= $data['kode_rayon']; ?></td>
-                                        <td class="Aksi">
-                                            <!-- Default dropstart button -->
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-success btn-sm dropdown-toggle"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Aksi
-                                                </button>
-                                                <ul class="dropdown-menu text-center">
-                                                    <?php
-                                    echo "<a href='../../m-users/users/edit.php?user=".$data['nij']."' data-toggle='modal' data-placement='bottom' title='Edit' class='btn aksi edit btn-sm btn-secondary mt-1'><svg data-toggle='tooltip' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor'
-                                        class='bi bi-pencil-square' viewBox='0 0 16 16'> <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z' />
-                                        <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z' /></svg></a>";
-                                    echo "<a href='../../m-users/users/index.php?konfir=".$data['nij']."' data-toggle='modal' data-target='#staticBackdrophps' data-placement='bottom' title='Hapus'
-                                        class='btn aksi hapus btn-sm btn-danger mt-1'><svg data-toggle='tooltip'
-                                            xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor'
-                                            class='bi bi-trash' viewBox='0 0 16 16'>
-                                            <path
-                                                d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z' />
-                                            <path fill-rule='evenodd'
-                                                d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z' />
-                                        </svg></a>";
-                                    echo "<a href='../../m-users/users/detail.php?user=".$data['nij']."' data-toggle='modal' data-target='#staticBackdropDetail' data-placement='bottom' title='Detail' class='btn aksi detail btn-sm btn-info mt-1'><svg data-toggle='tooltip' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'><path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/><path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/></svg></a>";
-
-                                    // echo "<a href='' class='ml-2'><i class='fas fa-bell text-danger'>5</i></a>";
-
-                                ?>
-                                                </ul>
-                                            </div>
-
-                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -287,7 +429,6 @@
                                         <th>Pendidikan Terakhir</th>
                                         <th class="w-25">Status</th>
                                         <th class="w-25">Pekerjaan</th>
-                                        <th class="w-25 Aksi">Aksi</th>
                                         <th hidden>NIJ</th>
                                         <th hidden>NIJ</th>
                                     </tr>
@@ -301,5 +442,5 @@
     </div>
 </main>
 <?php
- require_once '../footer.php';
+ require_once './footer.php';
 ?>
