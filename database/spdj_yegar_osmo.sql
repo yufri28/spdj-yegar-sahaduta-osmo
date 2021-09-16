@@ -59,13 +59,6 @@ CREATE TABLE `tb_anggota` (
 -- Dumping data for table `tb_anggota`
 --
 
-INSERT INTO `tb_anggota` (`nij`, `nkj`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `pendidikan_terakhir`, `status_dalam_kel`, `pekerjaan`, `kode_rayon`) VALUES
-('040400101', '0404001', 'Samuel Hilli', 'Kupang', '1972-12-21', 'Laki-Laki', 'SD', 'Kepala Keluarga', 'WIRASWASTA', '0404'),
-('040400102', '0404001', 'Sarlota Hilli-Le\'u', 'Kupang', '1976-09-15', 'Perempuan', 'SD', 'Istri', 'IBU RUMAH TANGGA', '0404'),
-('040400103', '0404001', 'Briliant Excel Hilli', 'Kupang', '2007-07-07', 'Laki-Laki', 'SD', 'Anak', 'PELAJAR', '0404'),
-('040400201', '0404002', 'Antonius Smaut', 'Oefafi', '1968-08-01', 'Laki-Laki', 'SMA/SMK', 'Kepala Keluarga', 'WIRASWASTA', '0404'),
-('040400203', '0404002', 'Gilbert Smaut', 'Kupang', '2000-01-17', 'Laki-Laki', 'SMA/SMK', 'Anak', 'PELAJAR', '0404');
-
 -- --------------------------------------------------------
 
 --
@@ -95,10 +88,6 @@ CREATE TABLE `tb_keluarga` (
 --
 -- Dumping data for table `tb_keluarga`
 --
-
-INSERT INTO `tb_keluarga` (`nkj`, `nik`, `password`, `kode_rayon`) VALUES
-('0404001', '5314072806990002', '$2y$10$1qw0xWUUiVg8Ws4AuZZ8jeN2WQO7CA2TqT0ngtaVidzSN26C3k0Vy', '0404'),
-('0404002', '5314072806990009', '$2y$10$1Rl7gDDt2mIJQF2KbVPXOOt0FK/F6kH/88fz6QcviBulrln2auez.', '0404');
 
 -- --------------------------------------------------------
 
